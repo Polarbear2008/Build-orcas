@@ -1,193 +1,176 @@
-# BUILDCORED ORCAS — Environment Setup Guide
+# 🐋 BUILDCORED ORCAS — Pre-Launch Checklist
 
-Complete this setup **before Day 1**. A failed install on launch morning is a morale event, not just a technical one.
-
-**Deadline:** You must run `verify_setup.py` and post a passing screenshot in your squad channel before the challenge starts.
+**Complete everything below before Day 1 — March 25, 8:00 AM**
+Deadline for setup verification: Monday March 24, midnight.
 
 ---
 
-## Step 1: Install Core Software
+## ⚙️ Step 1: Software Setup
 
-### Python 3.10+
+Everything you need installed takes ~30 minutes
 
-| Platform | Install |
-|----------|---------|
-| **macOS** | `brew install python@3.12` or download from [python.org](https://python.org) |
-| **Windows** | Download from [python.org](https://python.org). **Check "Add Python to PATH" during install.** |
-| **Linux** | `sudo apt-get install python3.12 python3.12-venv python3-pip` or use [pyenv](https://github.com/pyenv/pyenv) |
+### Install Python 3.10+
 
-Verify: `python --version` (or `python3 --version` on some systems)
+Open the Terminal on your PC. 
 
-### Git
+**macOS:**
 
-| Platform | Install |
-|----------|---------|
-| **macOS** | `xcode-select --install` (installs git) or `brew install git` |
-| **Windows** | Download from [git-scm.com](https://git-scm.com). Use default settings. |
-| **Linux** | `sudo apt-get install git` |
-
-Verify: `git --version`
-
-Configure git (if you haven't):
-```bash
-git config --global user.name "Your Name"
-git config --global user.email "you@example.com"
+```
+brew install python@3.12
 ```
 
-### ollama (Local AI Runtime)
+**Windows:**
+Download from [python.org](https://python.org/). **Check “Add Python to PATH” during install.**
 
-ollama runs AI models on your machine — no cloud, no API keys, no cost.
+**Linux:**
 
-| Platform | Install |
-|----------|---------|
-| **macOS** | Download from [ollama.com](https://ollama.com) or `brew install ollama` |
-| **Windows** | Download from [ollama.com](https://ollama.com) |
-| **Linux** | `curl -fsSL https://ollama.com/install.sh | sh` |
+```
+sudo apt-get install python3.12 python3.12-venv python3-pip
+```
 
-Verify: `ollama --version`
+**Verify:**
 
-**Start the server** (keep this running in a separate terminal):
-```bash
+```
+python3 --version
+```
+
+- [ ]  Python 3.10+ installed and verified
+
+---
+
+### Install system dependencies + Python packages
+
+**macOS:**
+
+```
+brew install portaudio
+pip install opencv-python mediapipe numpy scipy matplotlib pygame sounddevice pyaudio librosa psutil rich gitpython Pillow pyttsx3 pynput faster-whisper chromadb sentence-transformers PyMuPDF textual scikit-learn
+```
+
+**Windows:**
+
+```
+pip install opencv-python mediapipe numpy scipy matplotlib pygame sounddevice pyaudio librosa psutil rich gitpython Pillow pyttsx3 pynput faster-whisper chromadb sentence-transformers PyMuPDF textual scikit-learn
+```
+
+If pyaudio fails: `pip install pipwin && pipwin install pyaudio`
+
+**Linux:**
+
+```
+sudo apt-get install portaudio19-dev python3-pyaudio python3-tk
+pip install opencv-python mediapipe numpy scipy matplotlib pygame sounddevice pyaudio librosa psutil rich gitpython Pillow pyttsx3 pynput faster-whisper chromadb sentence-transformers PyMuPDF textual scikit-learn
+```
+
+- [ ]  All Python packages installed
+
+---
+
+### Install ollama + pull AI models
+
+**Install ollama:**
+- macOS: `brew install ollama` or download from [ollama.com](https://ollama.com/)
+- Windows/Linux: Download from [ollama.com](https://ollama.com/)
+
+**Start the server** (keep this terminal open):
+
+```
 ollama serve
 ```
 
-**Pull the required models** (this downloads ~2-4 GB total):
-```bash
+**In a NEW terminal, pull the models** (~2-4 GB download):
+
+```
 ollama pull qwen2.5:3b
 ollama pull moondream
 ```
 
-Verify models are pulled: `ollama list`
+**Verify:**
 
-### OBS Studio (for screen recordings on Advanced/Expert days)
+```
+ollama list
+```
 
-Download from [obsproject.com](https://obsproject.com). Free, all platforms.
-
-Alternatively: macOS built-in (Cmd+Shift+5), Windows Game Bar (Win+G).
-
-You won't need this until Day 10, but install it now so it's ready.
-
-### Code Editor
-
-[VS Code](https://code.visualstudio.com/) is recommended for its integrated terminal. Use whatever you're comfortable with.
+- [ ]  ollama installed and running
+- [ ]  Both models pulled (qwen2.5:3b and moondream)
 
 ---
 
-## Step 2: Install Python Packages
+### Install Git + configure
 
-Run this single command:
-
-```bash
-pip install opencv-python mediapipe numpy scipy matplotlib pygame sounddevice pyaudio librosa psutil rich gitpython Pillow pyttsx3 pynput faster-whisper chromadb sentence-transformers PyMuPDF textual scikit-learn
+```
+git --version
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
 ```
 
-### Platform-Specific Issues
-
-**macOS:**
-```bash
-# Required for pyaudio:
-brew install portaudio
-
-# Optional — MLX acceleration for Apple Silicon (not required):
-pip install mlx mlx-lm
-```
-
-**Windows:**
-```bash
-# If pyaudio install fails:
-pip install pipwin
-pipwin install pyaudio
-
-# You also need Microsoft C++ Build Tools for some packages:
-# Download from https://visualstudio.microsoft.com/visual-cpp-build-tools/
-```
-
-**Linux:**
-```bash
-# Required for pyaudio:
-sudo apt-get install portaudio19-dev python3-pyaudio
-
-# Required for tkinter (used in some projects):
-sudo apt-get install python3-tk
-
-# Volume control (used in Day 3):
-# Verify pactl or amixer is available:
-pactl --version  # or: amixer --version
-
-# Webcam check:
-ls /dev/video*
-# If no device, install: sudo apt-get install v4l-utils
-```
+- [ ]  Git installed and configured
 
 ---
 
-## Step 3: Verify Your Webcam and Microphone
+### Clone the repo + run verification
 
-Your laptop's built-in webcam and microphone are your primary sensors for this challenge. Verify they work:
-
-**Webcam:** Open any video call app or Photo Booth (Mac) / Camera (Windows) and confirm you see yourself.
-
-**Microphone:** Open your system audio settings and confirm the input level meter moves when you speak.
-
-If you're using an external USB webcam or microphone, make sure it's plugged in when you run the verification script.
-
----
-
-## Step 4: Run the Verification Script
-
-```bash
-git clone https://github.com/YOUR_USERNAME/buildcored-orcas.git
+```
+git clone https://github.com/PeterVanPercson/buildcored-orcas.git
 cd buildcored-orcas
 python verify_setup.py
 ```
 
-The script checks everything: Python version, packages, webcam, microphone, ollama, git config. Each check shows PASS or FAIL with specific fix instructions.
+The script checks everything — Python, packages, webcam, mic, ollama, git. Every check must show **PASS**.
 
-**All checks must pass before Day 1.**
+If something fails, the script tells you the exact fix command for your OS. Run it, then re-run the script.
 
-Screenshot your results and post them in your squad channel on Discord.
-
----
-
-## Step 5: If Something Fails
-
-1. Read the fix instruction printed by the script — it's OS-specific.
-2. Run the fix command.
-3. Run `verify_setup.py` again.
-4. If it still fails, post in `#tech-support` on Discord with this format:
-
-```
-OS: [Mac/Windows/Linux] | Check: [which one failed] | Error: [exact message] | Tried: [what you already attempted]
-```
-
-Do not wait until the last day. Fix issues early.
+- [ ]  All checks PASS
+- [ ]  Screenshot taken of passing results
 
 ---
 
-## What Each Package Is For
+## 🤝 Step 2: Join the Community
 
-Not every package is used every day. Here's why each one is in the install:
+### ⭐ Star the GitHub repo
 
-| Package | Used For |
-|---------|----------|
-| opencv-python | Webcam capture, image processing (Weeks 1-4) |
-| mediapipe | Face, hand, and pose detection (Weeks 1, 4) |
-| numpy | Array math, signal processing (every week) |
-| scipy | Filters, FFT, signal processing (Weeks 1, 3) |
-| matplotlib | Plotting, visualization (Weeks 1-4) |
-| pygame | Audio playback, graphics (Weeks 1, 3) |
-| sounddevice | Audio capture and playback (Weeks 1-3) |
-| pyaudio | Microphone input (Weeks 1-3) |
-| librosa | Audio analysis and manipulation (Week 1) |
-| psutil | System monitoring, CPU/battery (Week 3) |
-| rich | Terminal UI formatting (Weeks 2-4) |
-| gitpython | Git integration (Week 2) |
-| Pillow | Image handling (Weeks 2, 4) |
-| pyttsx3 | Text-to-speech (Week 4) |
-| pynput | Keyboard/mouse input (Weeks 1, 3, 4) |
-| faster-whisper | Speech-to-text (Week 2) |
-| chromadb | Vector database for RAG (Week 4) |
-| sentence-transformers | Text embeddings (Week 4) |
-| PyMuPDF | PDF parsing (Week 4) |
-| textual | Terminal UI framework (Week 4) |
-| scikit-learn | Machine learning (Week 4) |
+Go to [github.com/PeterVanPercson/buildcored-orcas](https://github.com/PeterVanPercson/buildcored-orcas) and click the ⭐ **Star** button in the top right.
+
+- [ ]  Repo starred
+
+---
+
+### Join the Discord server
+
+**This is where the entire challenge happens.** Telegram is for reminders only.
+
+👉 [**Join Discord**](https://discord.gg/WqPwnX9n)
+
+After joining:
+1. Read **#rules-and-info** completely — this is your orientation
+2. Introduce yourself in **#introductions** (name, location, why you joined)
+3. Post your `verify_setup.py` screenshot in **#tech-support**
+
+- [ ]  Joined Discord
+- [ ]  Introduced myself
+- [ ]  Posted setup screenshot
+
+---
+
+## 💡 Step 3: Recommended (not must, but helps)
+
+These aren’t required to start Day 1, but will save you time later.
+
+- [ ]  **Install OBS Studio** — Free screen recorder from [obsproject.com](https://obsproject.com/). Required on Advanced/Expert days (Day 10+). Mac users can use Cmd+Shift+5 instead. Windows users can use Win+G.
+- [ ]  **Install VS Code** — Download from [code.visualstudio.com](https://code.visualstudio.com/). Any editor works, but VS Code’s integrated terminal makes the workflow faster.
+- [ ]  **Test your webcam** — Open Photo Booth (Mac) or Camera app (Win). Confirm you see yourself. If using external USB webcam, plug it in now.
+- [ ]  **Test your microphone** — Open system audio settings. Speak. Confirm the input level moves.
+
+---
+
+## 🚨 If you’re stuck
+
+Post in **#tech-support** on Discord with this exact format:
+
+```
+OS: [Mac/Windows/Linux] | Check: [which step] | Error: [exact message] | Tried: [what you did]
+```
+
+Your squad lead responds within 1 hour. If unresolved, they escalate to the mentor.
+
+**Do not wait until Monday night.** Fix issues now.

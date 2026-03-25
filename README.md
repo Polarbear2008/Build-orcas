@@ -23,6 +23,22 @@ python verify_setup.py
 
 Follow the [Environment Setup Guide](SETUP_GUIDE.md) to install all dependencies before Day 1.
 
+## Projects Directory
+
+Here are the completed daily projects so far:
+- **Day 1**: [RockLook](days/day-01-rocklook) - Webcam gaze detection triggering rock music playback.
+- **Day 2**: [AirCanvas](days/day-02-aircanvas) - Draw on an invisible canvas using finger pinches.
+- **Day 3**: [VolumeKnuckle](days/day-03-volumeknuckle) - Raise and lower your fist to control Mac system volume.
+- **Day 4**: [BlinkLock](days/day-04-blinklock) - Lock your screen with rapid blinks, unlock with a wink.
+- **Day 5**: [FaceEQ](days/day-05-faceeq) - Turn your head to scrub a song, tilt to change the pitch.
+- **Day 6**: [BreathClock](days/day-06-breathclock) - Listen to your breathing and calculate BPM using microphone inputs.
+- **Day 7**: [KeyboardOscilloscope](days/day-07-keyboardoscilloscope) - Press keys to synthesize tones and form visible chords.
+- **Day 8**: [PocketAgent](days/day-08-pocketagent) - Run an AI assistant entirely on your laptop. No internet required.
+- **Day 9**: [WhisperDesk](days/day-09-whisperdesk) - Talk to your laptop and it types what you say offline.
+- **Day 10**: [TerminalBrain](days/day-10-terminalbrain) - Terminal wrapper that actively watches for shell errors and suggests AI fixes offline.
+- **Day 11**: [MoodSynth](days/day-11-moodsynth) - Type a semantic mood, and the AI synthesizes an infinite ambient soundscape to match.
+- **Day 12**: [SnapAnnotator](days/day-12-snapannotator) - Accesses the webcam and uses edge VLM inference to label everything it sees.
+
 ## What Is This?
 
 BUILDCORED ORCAS is a 30-day daily build challenge for people with Python fundamentals who want to develop hardware engineering intuition — without owning any hardware.
